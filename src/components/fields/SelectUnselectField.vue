@@ -50,22 +50,25 @@ const props = defineProps({
     },
 });
 
+//Definimos las listas filtrando las opciones disponibles y las deshabilitadas
 const availableOptions = ref(props.field.options.filter(option => !props.modelValue.includes(option.id)));
 const disabledOptions = ref(props.field.options.filter(option => props.modelValue.includes(option.id)));
-console.log()
 
+//Habilitar opciones
 const moveToAvailable = (item) => {
     disabledOptions.value = disabledOptions.value.filter(option => option.id !== item.id);
     availableOptions.value.push(item);
     emitUpdate();
 };
 
+//Deshablitar opciones
 const moveToDisabled = (item) => {
     availableOptions.value = availableOptions.value.filter(option => option.id !== item.id);
     disabledOptions.value.push(item);
     emitUpdate();
 };
 
+//Funcion para emitir updates al padre
 const emitUpdate = () => {
     
     emit('update', {
@@ -74,9 +77,9 @@ const emitUpdate = () => {
     });
 };
 
+//En caso de recibir nuevos valores del padre actualizo las listas
 watch(() => props.modelValue, (newVal) => {
-    availableOptions.value = props.field.options.filter(option => !newVal.includes(option.id));
-    disabledOptions.value = props.field.options.filter(option => newVal.includes(option.id));
+    emitUpdate();
 });
 
 </script>

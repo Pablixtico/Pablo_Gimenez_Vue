@@ -37,7 +37,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 const emit = defineEmits(['update']);
 const props = defineProps({
     field: {
@@ -73,6 +73,11 @@ const emitUpdate = () => {
         value: disabledOptions.value.map(option => option.id),
     });
 };
+
+watch(() => props.modelValue, (newVal) => {
+    availableOptions.value = props.field.options.filter(option => !newVal.includes(option.id));
+    disabledOptions.value = props.field.options.filter(option => newVal.includes(option.id));
+});
 
 </script>
 

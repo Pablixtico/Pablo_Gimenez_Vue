@@ -77,8 +77,10 @@ const emitUpdate = () => {
     });
 };
 
-//En caso de recibir nuevos valores del padre actualizo las listas
+//En caso de recibir nuevos valores del padre mando el update
 watch(() => props.modelValue, (newVal) => {
+    availableOptions.value = props.field.options.filter(option => !newVal.includes(option.id));
+    disabledOptions.value = props.field.options.filter(option => newVal.includes(option.id));
     emitUpdate();
 });
 

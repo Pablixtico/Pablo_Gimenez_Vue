@@ -61,7 +61,7 @@ const moveToAvailable = (item) => {
 };
 
 const moveToDisabled = (item) => {
-    availableOptions.value = availableOptions.value.filter(option => option.id !== event.target.value);
+    availableOptions.value = availableOptions.value.filter(option => option.id !== item.id);
     disabledOptions.value.push(item);
     emitUpdate();
 };
